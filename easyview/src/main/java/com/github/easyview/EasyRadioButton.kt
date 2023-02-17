@@ -4,28 +4,33 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import android.widget.RadioButton
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
+import androidx.appcompat.widget.AppCompatRadioButton
 import com.github.easyview.facade.EasyViewFacadeImpl
 
-/**
- * @author: Little Bei
- * @Date: 2021/12/13
- */
-class EasyRecyclerView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
-        RecyclerView(context, attrs, defStyleAttr), EasyViewExpose {
 
-    private val easyViewFacadeImpl = EasyViewFacadeImpl()
-
-    constructor(context: Context): this(context, null)
+class EasyRadioButton : AppCompatRadioButton, EasyViewExpose {
 
 
-    constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0){
+    constructor(context: Context?) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        easyViewFacadeImpl.init(context, this, attrs)
+    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         easyViewFacadeImpl.init(context, this, attrs)
     }
 
+
+    private val easyViewFacadeImpl = EasyViewFacadeImpl()
+
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         easyViewFacadeImpl.onSizeChanged(w, h)
+        super.onSizeChanged(w, h, oldw, oldh)
     }
 
     override fun draw(canvas: Canvas) {
@@ -38,7 +43,12 @@ class EasyRecyclerView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
         easyViewFacadeImpl.setRadius(dp)
     }
 
-    override fun setRadius(topLeftDp: Float, topRightDp: Float, bottomRightDp: Float, bottomLeftDp: Float) {
+    override fun setRadius(
+        topLeftDp: Float,
+        topRightDp: Float,
+        bottomRightDp: Float,
+        bottomLeftDp: Float
+    ) {
         easyViewFacadeImpl.setRadius(topLeftDp, topRightDp, bottomRightDp, bottomLeftDp)
     }
 
@@ -91,4 +101,6 @@ class EasyRecyclerView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
     }
 
 
+    fun initView(context: Context, view: View, attrSet: AttributeSet?) {
+    }
 }
